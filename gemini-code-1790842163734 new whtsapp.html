@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Via - A/L Commerce & ICT Tutor Matching Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* All original styles retained */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f0f4ff;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        .navbar { background: var(--card-bg); box-shadow: 0 2px 20px rgba(0,0,0,0.08); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo { display: flex; align-items: center; gap: 0.75rem; font-size: 1.5rem; font-weight: 700; color: var(--primary); cursor: pointer; }
+        .logo i { font-size: 1.75rem; color: var(--secondary); }
+        .nav-links { display: flex; gap: 1rem; align-items: center; }
+        .nav-btn { padding: 0.6rem 1.5rem; border: none; border-radius: 8px; cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 500; font-size: 0.95rem; transition: all 0.3s ease; }
+        .nav-btn.outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); }
+        .nav-btn.outline:hover { background: var(--primary); color: white; }
+        .nav-btn.primary { background: var(--primary); color: white; }
+        .nav-btn.primary:hover { background: var(--primary-dark); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .hero { display: flex; align-items: center; justify-content: center; min-height: 80vh; gap: 3rem; flex-wrap: wrap; }
+        .hero-content { flex: 1; min-width: 300px; max-width: 550px; }
+        .hero-content h1 { font-size: 3rem; font-weight: 700; line-height: 1.2; margin-bottom: 1rem; color: var(--text); }
+        .hero-content h1 span { color: var(--primary); }
+        .hero-content p { font-size: 1.1rem; color: var(--text-light); margin-bottom: 2rem; line-height: 1.6; }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .hero-btn { padding: 1rem 2rem; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
+        .hero-btn.student { background: var(--primary); color: white; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3); }
+        .hero-btn.student:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .hero-btn.tutor { background: var(--secondary); color: white; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        .hero-btn.tutor:hover { background: #d97706; transform: translateY(-2px); }
+        .hero-image { flex: 1; min-width: 300px; display: flex; justify-content: center; align-items: center; }
+        .hero-card { background: var(--card-bg); border-radius: 20px; padding: 2rem; box-shadow: 0 20px 60px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        .hero-card h2 { text-align: center; margin-bottom: 1.5rem; color: var(--primary); }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; font-size: 0.9rem; color: var(--text); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 0.95rem; transition: border-color 0.3s ease; outline: none; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); }
+        .submit-btn { width: 100%; padding: 0.9rem; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 0.5rem; }
+        .submit-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        .submit-btn.tutor-btn { background: var(--secondary); }
+        .submit-btn.tutor-btn:hover { background: #d97706; }
+        .form-footer { text-align: center; margin-top: 1rem; font-size: 0.9rem; color: var(--text-light); }
+        .form-footer a { color: var(--primary); text-decoration: none; font-weight: 500; cursor: pointer; }
+        .form-footer a:hover { text-decoration: underline; }
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .form-card { max-width: 650px; margin: 2rem auto; background: var(--card-bg); border-radius: 20px; padding: 2.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+        .form-card h2 { text-align: center; margin-bottom: 0.5rem; color: var(--primary); font-size: 1.8rem; }
+        .form-card .subtitle { text-align: center; color: var(--text-light); margin-bottom: 2rem; font-size: 0.95rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; margin-left: 0.5rem; }
+        .badge.student { background: #dbeafe; color: var(--primary); }
+        .badge.tutor { background: #fef3c7; color: #92400e; }
+        .dashboard-header { text-align: center; margin-bottom: 2.5rem; }
+        .dashboard-header h2 { font-size: 2.2rem; color: var(--primary); margin-bottom: 0.5rem; }
+        .dashboard-header p { color: var(--text-light); font-size: 1.05rem; }
+        .subjects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .subject-card { background: var(--card-bg); border: 2px solid var(--border); border-radius: 20px; padding: 2.5rem 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+        .subject-card:hover { border-color: var(--primary); transform: translateY(-8px); box-shadow: 0 12px 30px rgba(37, 99, 235, 0.15); }
+        .subject-icon { font-size: 3rem; color: var(--primary); margin-bottom: 1.2rem; }
+        .subject-card h3 { font-size: 1.3rem; color: var(--text); }
+        .tutors-container { max-width: 900px; margin: 0 auto; }
+        .tutor-list-card { background: var(--card-bg); border: 2px solid var(--border); border-radius: 16px; padding: 1.5rem 2rem; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        .tutor-list-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37, 99, 235, 0.1); }
+        .tutor-info h3 { font-size: 1.2rem; color: var(--text); margin-bottom: 0.3rem; display: flex; align-items: center; gap: 0.5rem; }
+        .tutor-info p { color: var(--text-light); font-size: 0.9rem; }
+        .connect-btn { background: var(--primary); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 500; cursor: pointer; transition: background 0.3s ease; text-decoration: none; display: inline-block; }
+        .connect-btn:hover { background: var(--primary-dark); color: white; }
+        .profile-container { max-width: 900px; margin: 0 auto; background: var(--card-bg); border-radius: 20px; padding: 2.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.08); }
+        .profile-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; }
+        .profile-avatar { font-size: 4rem; color: var(--primary); background: var(--bg); width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .profile-details h2 { font-size: 1.8rem; color: var(--text); margin-bottom: 0.3rem; }
+        .profile-details p { color: var(--text-light); font-size: 1rem; }
+        .videos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+        .video-card { background: var(--bg); border-radius: 12px; overflow: hidden; border: 2px solid var(--border); }
+        .video-card video { width: 100%; height: 200px; object-fit: cover; background: #000; }
+        .video-info { padding: 1rem; }
+        .video-info h4 { font-size: 1rem; color: var(--text); margin-bottom: 0.3rem; }
+        .video-info p { font-size: 0.85rem; color: var(--text-light); }
+        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 3rem 0; }
+        .feature-card { background: var(--card-bg); border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center; transition: transform 0.3s ease; }
+        .feature-card:hover { transform: translateY(-5px); }
+        .feature-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 1rem; }
+        .feature-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .feature-card p { font-size: 0.9rem; color: var(--text-light); }
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .hero { flex-direction: column-reverse; }
+            .tutor-list-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .connect-btn { width: 100%; text-align: center; }
+            .profile-header { flex-direction: column; text-align: center; }
+        }
+        .footer { text-align: center; padding: 2rem; color: var(--text-light); font-size: 0.85rem; margin-top: 2rem; }
+        .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-light); text-decoration: none; font-size: 0.9rem; margin-bottom: 1rem; cursor: pointer; }
+        .back-link:hover { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo" onclick="showSection('home')">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Tutor Via</span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <button class="nav-btn outline" onclick="showSection('studentReg')">Student Sign Up</button>
+            <button class="nav-btn primary" onclick="showSection('tutorReg')">Tutor Sign Up</button>
+        </div>
+    </nav>
+
+    <!-- HOME / LOGIN SECTION -->
+    <section id="home" class="section active">
+        <div class="container">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Connect with <span>Top University Tutors</span> for A/L Commerce & ICT</h1>
+                    <p>Tutor Via is Sri Lanka's trusted platform connecting A/L Commerce and ICT students with verified university tutors. Get personalized tutoring, improve your grades, and ace your exams.</p>
+                    <div class="hero-buttons">
+                        <button class="hero-btn student" onclick="showSection('studentReg')"><i class="fas fa-user-graduate"></i> I am a Student</button>
+                        <button class="hero-btn tutor" onclick="showSection('tutorReg')"><i class="fas fa-chalkboard-user"></i> I am a Tutor</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-card">
+                        <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+                        <form onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                            </div>
+                            <button type="submit" class="submit-btn">Login</button>
+                            <div class="form-footer">
+                                Don't have an account? <a onclick="showSection('studentReg')">Register as Student</a> or <a onclick="showSection('tutorReg')">Register as Tutor</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Features -->
+            <div class="features">
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-search"></i></div><h3>Find Tutors</h3><p>Search by subject and find the best online tutor</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-check-circle"></i></div><h3>Verified Profiles</h3><p>All tutors are verified university students/lecturers</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-video"></i></div><h3>100% Online</h3><p>All tutoring sessions conducted via Zoom/Google Meet</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-star"></i></div><h3>Rate & Review</h3><p>Share feedback after every session</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STUDENT REGISTRATION SECTION -->
+    <section id="studentReg" class="section">
+        <div class="container">
+            <div class="form-card">
+                <a class="back-link" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                <h2>Student Registration</h2>
+                <p class="subtitle">Create your account to connect with top university tutors</p>
+                <form onsubmit="handleStudentRegister(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="studentName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="text" id="studentPhone" placeholder="Enter phone number" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="studentEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>A/L Stream</label>
+                            <select id="studentStream" required>
+                                <option value="">Select Stream</option>
+                                <option value="Accounting">Accounting</option>
+                                <option value="Business Studies">Business Studies</option>
+                                <option value="Economics">Economics</option>
+                                <option value="ICT">ICT</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="studentPassword" placeholder="Create a password" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn">Register as Student</button>
+                    <div class="form-footer">
+                        Already have an account? <a onclick="showSection('home')">Login here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- TUTOR REGISTRATION SECTION -->
+    <section id="tutorReg" class="section">
+        <div class="container">
+            <div class="form-card">
+                <a class="back-link" onclick="showSection('home')"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                <h2>Tutor Registration</h2>
+                <p class="subtitle">Join Tutor Via as a verified university tutor</p>
+                <form onsubmit="handleTutorRegister(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="tutorName" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>University / Qualifications</label>
+                            <input type="text" id="tutorPosition" placeholder="e.g. University of Colombo" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="tutorEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Subject You Teach</label>
+                            <select id="tutorSubject" required>
+                                <option value="">Select Subject</option>
+                                <option value="Accounting">Accounting</option>
+                                <option value="Business Studies">Business Studies</option>
+                                <option value="Economics">Economics</option>
+                                <option value="ICT">ICT</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="tutorPassword" placeholder="Create a password" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn tutor-btn">Register as Tutor</button>
+                    <div class="form-footer">
+                        Already have an account? <a onclick="showSection('home')">Login here</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- SELECT SUBJECT DASHBOARD -->
+    <section id="dashboard" class="section">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>Select Your Subject</h2>
+                <p>Choose a subject below to find tutors or manage your learning materials</p>
+            </div>
+            <div class="subjects-grid">
+                <div class="subject-card" onclick="selectSubject('Accounting')"><div class="subject-icon"><i class="fas fa-calculator"></i></div><h3>Accounting</h3></div>
+                <div class="subject-card" onclick="selectSubject('Business Studies')"><div class="subject-icon"><i class="fas fa-briefcase"></i></div><h3>Business Studies</h3></div>
+                <div class="subject-card" onclick="selectSubject('Economics')"><div class="subject-icon"><i class="fas fa-chart-line"></i></div><h3>Economics</h3></div>
+                <div class="subject-card" onclick="selectSubject('ICT')"><div class="subject-icon"><i class="fas fa-laptop-code"></i></div><h3>ICT</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACCOUNTING TUTORS SECTION (8 Tutors) -->
+    <section id="accountingTutors" class="section">
+        <div class="container">
+            <a class="back-link" onclick="showSection('dashboard')"><i class="fas fa-arrow-left"></i> Back to Subjects</a>
+            <div class="dashboard-header" style="margin-bottom: 2rem;">
+                <h2>Accounting Tutors</h2>
+                <p>Select a verified university tutor below to view profile and connect</p>
+            </div>
+            <div class="tutors-container">
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Anushka Priyasad</h3><p>Wayamba University, Kuliyapitiya</p></div>
+                    <button class="connect-btn" onclick="showProfile('anushkaProfile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Accounting with Namal Dilanka</h3><p>MBA(Finance)UK 🇬🇧, B.Sc Finance(Special), USJP</p></div>
+                    <button class="connect-btn" onclick="showProfile('namalProfile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> accounting with Rohan Kodagoda</h3><p>Senior Lecturer</p></div>
+                    <button class="connect-btn" onclick="showProfile('rohanProfile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Dishan Perera</h3><p>BSc. Finance (Sp) USJP</p></div>
+                    <button class="connect-btn" onclick="showProfile('dishanProfile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> shehara madukalpa</h3><p>University of Colombo</p></div>
+                    <button class="connect-btn" onclick="showProfile('kasunProfile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> accounting with ravindra dissanayake</h3><p>B.sc (Mgt) university of sri jayawardanepura</p></div>
+                    <button class="connect-btn" onclick="showProfile('chathuraProfile')">View Profile & Connect</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BUSINESS STUDIES TUTORS SECTION (8 Tutors) -->
+    <section id="businessStudiesTutors" class="section">
+        <div class="container">
+            <a class="back-link" onclick="showSection('dashboard')"><i class="fas fa-arrow-left"></i> Back to Subjects</a>
+            <div class="dashboard-header" style="margin-bottom: 2rem;">
+                <h2>Business Studies Tutors</h2>
+                <p>Select a verified university tutor below to view profile and connect</p>
+            </div>
+            <div class="tutors-container">
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Indika Paranavithana</h3><p>B.Sc (B.Ad) University of Sri Jayawardenapura</p></div>
+                    <button class="connect-btn" onclick="showProfile('bs1Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Koralage Lakshan</h3><p>B.Sc (mgt) sp University of Sri Jayawardenapura</p></div>
+                    <button class="connect-btn" onclick="showProfile('bs2Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Lakshan Mallawaarachchi</h3><p>BSc.(HRM)Special, USJP(UG)</p></div>
+                    <button class="connect-btn" onclick="showProfile('bs3Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Neil Welipitiya</h3><p>B.com(special) University of Kelaniya</p></div>
+                    <button class="connect-btn" onclick="showProfile('bs4Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Navod Wijesinghe</h3><p>BSc (Hons) Accounting & Finance</p></div>
+                    <button class="connect-btn" onclick="showProfile('bs5Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Sandaru De Silva</h3><p>B.Com.Hons. University of Kelaniya(ug)</p></div>
+                    <button class="connect-btn" onclick="showProfile('bs6Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Business studies with kenishi</h3><p>B.Sc Accounting(special) University of Sri Jayewardenapura</p></div>
+                    <button class="connect-btn" onclick="showProfile('bs7Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Sanjeewa weerasinghe</h3><p>university of kelaniya</p></div>
+                    <button class="connect-btn" onclick="showProfile('bs8Profile')">View Profile & Connect</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ECONOMICS TUTORS SECTION (8 Tutors) -->
+    <section id="economicsTutors" class="section">
+        <div class="container">
+            <a class="back-link" onclick="showSection('dashboard')"><i class="fas fa-arrow-left"></i> Back to Subjects</a>
+            <div class="dashboard-header" style="margin-bottom: 2rem;">
+                <h2>Economics Tutors</h2>
+                <p>Select a verified university tutor below to view profile and connect</p>
+            </div>
+            <div class="tutors-container">
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Nishshanka Hapuarachchi</h3><p>BA(Economics/Psychology)UOP</p></div>
+                    <button class="connect-btn" onclick="showProfile('ec1Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Akila Dilshan</h3><p>BSc.(Hons) Business Management </p></div>
+                    <button class="connect-btn" onclick="showProfile('ec2Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Akila Deshapriya</h3><p>B.Com (sp) usj Reading ICASL</p></div>
+                    <button class="connect-btn" onclick="showProfile('ec3Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Danushka Lakmal</h3><p>B.Sc.Mgt(Special) University of Sri Jayawardenapura</p></div>
+                    <button class="connect-btn" onclick="showProfile('ec4Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Shamika Weerasinghe</h3><p>BSc. Management (Special) Degree, University of Jayawardenapura</p></div>
+                    <button class="connect-btn" onclick="showProfile('ec5Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Dilshan Bopage</h3><p>MA Economics,</p></div>
+                    <button class="connect-btn" onclick="showProfile('ec6Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Vinuja Vindiya</h3><p>B.Sc Honours in Accounting (UG)</p></div>
+                    <button class="connect-btn" onclick="showProfile('ec7Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Kushani Hansika</h3><p>B.A. in Economics MEcon (Reading)</p></div>
+                    <button class="connect-btn" onclick="showProfile('ec8Profile')">View Profile & Connect</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ICT TUTORS SECTION (8 Tutors) -->
+    <section id="ictTutors" class="section">
+        <div class="container">
+            <a class="back-link" onclick="showSection('dashboard')"><i class="fas fa-arrow-left"></i> Back to Subjects</a>
+            <div class="dashboard-header" style="margin-bottom: 2rem;">
+                <h2>ICT Tutors</h2>
+                <p>Select a verified university tutor below to view profile and connect</p>
+            </div>
+            <div class="tutors-container">
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Deshan Perera</h3><p>University of Sri Jayawardhenapura</p></div>
+                    <button class="connect-btn" onclick="showProfile('ict1Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Neranda Dilhara</h3><p>Bsc(Hons) in Information Technology </p></div>
+                    <button class="connect-btn" onclick="showProfile('ict2Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Sadumini Perera</h3><p>BSc.(Hons) Software Engineeering </p></div>
+                    <button class="connect-btn" onclick="showProfile('ict3Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Kamal Krishantha</h3><p>BSc in Computer Science | University of Colombo</p></div>
+                    <button class="connect-btn" onclick="showProfile('ict4Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Shashika Mdhushan</h3><p>BSc.(Hons) IT </p></div>
+                    <button class="connect-btn" onclick="showProfile('ict5Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Aruna Bandara</h3><p>University of colombo</p></div>
+                    <button class="connect-btn" onclick="showProfile('ict6Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Pubudu Bandara Wijekoon</h3><p>BSc. Hons in Information Technology (SLIT)</p></div>
+                    <button class="connect-btn" onclick="showProfile('ict7Profile')">View Profile & Connect</button>
+                </div>
+                <div class="tutor-list-card">
+                    <div class="tutor-info"><h3><i class="fas fa-chalkboard-user" style="color: var(--primary);"></i> Pankaja Wickramarathna</h3><p>BSc.(hons) in data Science Reading SLTC</p></div>
+                    <button class="connect-btn" onclick="showProfile('ict8Profile')">View Profile & Connect</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACCOUNTING TUTOR PROFILES WITH VIDEO -->
+
+    <!-- ANUSHKA PRIYASAD -->
+    <section id="anushkaProfile" class="section">
+        <div class="container">
+            <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                    <div class="profile-details">
+                        <h2>Anushka Priyasad</h2>
+                        <p>Wayamba University, Kuliyapitiya | A/L Tutor</p>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+                <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                    <div class="video-card">
+                        <video controls>
+                            <source src="AQO4vWy-2tZbzhLmM9-FuodC9UNYRNJAj9oaS00migkiRckXuPTleUbHOi1GsHHL1J8-SxfqZhCozoZslomvSmMh.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-info"><h4>Full Paper Series</h4></div>
+                    </div>
+                </div>
+                <div style="margin-top: 2.5rem; text-align: center;">
+                    <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Anushka%20Priyasad%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NAMAL DILANKA -->
+    <section id="namalProfile" class="section">
+        <div class="container">
+            <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                    <div class="profile-details">
+                        <h2>Accounting with Namal Dilanka</h2>
+                        <p>MBA(Finance)UK 🇬🇧, B.Sc Finance(Special), USJP</p>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+                <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                    <div class="video-card">
+                        <video controls>
+                            <source src="AQM-X4iySI_ZrxTc8PRK-1xvY_UaqHtzINUAIL2iB_RggnGKpE8BOOsoWLWbCTh2CbQqnMoAqZ8h3-vVBgQU0qSLnQcQCQ-pcDIIG4To_A (2).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-info"><h4>Full Paper Series</h4></div>
+                    </div>
+                </div>
+                <div style="margin-top: 2.5rem; text-align: center;">
+                    <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Accounting%20with%20Namal%20Dilanka%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROHAN KODAGODA -->
+    <section id="rohanProfile" class="section">
+        <div class="container">
+            <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                    <div class="profile-details">
+                        <h2>accounting with Rohan Kodagoda</h2>
+                        <p>Senior Lecturer</p>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+                <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                    <div class="video-card">
+                        <video controls>
+                            <source src="AQMjXqf1K94ZAdc8BzNjEa83PjQ29kCHCMDvVSaclsCpnUlCvERmBK-hbGywclZj4t9QSYGfBoiAxbaJshOmHI7PF71itd_x8De7rKJ9mA.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-info"><h4>Full Paper Series</h4></div>
+                    </div>
+                </div>
+                <div style="margin-top: 2.5rem; text-align: center;">
+                    <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20accounting%20with%20Rohan%20Kodagoda%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DISHAN PERERA -->
+    <section id="dishanProfile" class="section">
+        <div class="container">
+            <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                    <div class="profile-details">
+                        <h2>Dishan Perera</h2>
+                        <p>BSc. Finance (Sp) USJP</p>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+                <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                    <div class="video-card">
+                        <video controls>
+                            <source src="AQM6zlzCEL27h-jeoh0pqejYUTK7RDAJRvrVrCQ07R0JIAKy2oCC8UXZpiFDI17h67FfGf_CjbS1_xi-AwsFD3Px5T-HhcDbjGnsCxiHBQ (1).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-info"><h4>Full Paper Series</h4></div>
+                    </div>
+                </div>
+                <div style="margin-top: 2.5rem; text-align: center;">
+                    <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Dishan%20Perera%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- shehara madukalpa -->
+    <section id="kasunProfile" class="section">
+        <div class="container">
+            <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                    <div class="profile-details">
+                        <h2>shehara madukalpa</h2>
+                        <p>university of colombo</p>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+                <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                    <div class="video-card">
+                        <video controls>
+                            <source src="AQMjQPXwUntAZ7SoZnnlGyIfIoagTb6OPr9QADEGsUEZAEM-Wn0GBNHdLUyEjlfnzWy4ctb9GjCXHOI6X8s6jVaJODtDB05jK4lPSqVJgg.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-info"><h4>Full Paper Series</h4></div>
+                    </div>
+                </div>
+                <div style="margin-top: 2.5rem; text-align: center;">
+                    <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Kasun%20Weerasinghe%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- accounting with ravindra dissanayake -->
+    <section id="chathuraProfile" class="section">
+        <div class="container">
+            <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                    <div class="profile-details">
+                        <h2>accounting with ravindra dissanayake</h2>
+                        <p>B.sc (Mgt) university of sri jayawardanepura</p>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+                <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                    <div class="video-card">
+                        <video controls>
+                            <source src="AQNAeofUB_QGtlvTE4sbthmxkKcymsXXf5OUgkjJqae0yisfaEMnw154vzoJzgh9T0ItZ7NMl_DfYpJSkZ5rNb0Gthg9ShpK0RTjjB8_Pg.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-info"><h4>Full Paper Series</h4></div>
+                    </div>
+                </div>
+                <div style="margin-top: 2.5rem; text-align: center;">
+                    <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Chathura%20Bandara%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- accounting with lasantha niroshan -->
+    <section id="tharinduProfile" class="section">
+        <div class="container">
+            <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+            <div class="profile-container">
+                <div class="profile-header">
+                    <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                    <div class="profile-details">
+                        <h2>accounting with lasantha niroshan</h2>
+                        <p>University of Colombo</p>
+                    </div>
+                </div>
+                <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+                <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                    <div class="video-card">
+                        <video controls>
+                            <source src="AQN7WcwMgaKeVsHSksAXzQDD_2OoZHkfEB4RLGx6dkaNWEf7z1Ilk6ntrlr0nqDjDIjQZgQcMPzbCjjDCMr1nJqLYveAysVcZDvGCDjChA.mp4" type="video/mp4">
+                        </video>
+                        <div class="video-info"><h4>Full Paper Series</h4></div>
+                    </div>
+                </div>
+                <div style="margin-top: 2.5rem; text-align: center;">
+                    <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Tharindu%20Perera%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- BS1: Indika Paranavithana -->
+<section id="bs1Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Indika Paranavithana</h2>
+                    <p>B.Sc (B.Ad) University of Sri Jayawardenapura</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Indika Pranavithana.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Nimal%20Fernando%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BS2: Koralage Lakshan -->
+<section id="bs2Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Koralage Lakshan</h2>
+                    <p>B.Sc (mgt) sp University of Sri Jayawardenapura</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Koralage Lakshan.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Kamal%20Weerakoon%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BS3: Lakshan Mallawaarachchi -->
+<section id="bs3Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Lakshan Mallawaarachchi</h2>
+                    <p>BSc.(HRM)Special, USJP(UG)</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Lakshan Mallavarachchi.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Sunethra%20Peiris%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BS4: Neil Welipitiya -->
+<section id="bs4Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Neil Welipitiya</h2>
+                    <p>B.com(special) University of Kelaniya</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Neil Welipitiya.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Ruwan%20Kumara%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BS5: Navod Wijesinghe -->
+<section id="bs5Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Navod Wijesinghe</h2>
+                    <p>BSc (Hons) Accounting & Finance</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Navod Wijesinghe.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Jagath%20Bandara%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BS6: Sandaru De Silva -->
+<section id="bs6Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Sandaru De Silva</h2>
+                    <p>B.Com.Hons. University of Kelaniya(ug)</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Sandaru De Silva.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Saman%20Perera%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BS7: Business studies with kenishi -->
+<section id="bs7Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Business studies with kenishi</h2>
+                    <p>B.Sc Accounting(special) University of Sri Jayewardenapura</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="AQMZ5hZxIhclV_ltEaDeo-x1bESqqEghZeDKbEzYSDweNuQsxfNd02X7STfsEBXmMthp-CwejMlWS-PkHcUecAVKIjv1AUEUC8SvOh_Epw.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Dinesh%20Silva%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BS8: Sanjeewa weerasinghe -->
+<section id="bs8Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Sanjeewa weerasinghe</h2>
+                    <p>university of kelaniya</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="AQNqzPPTysIg9FhlF9sWk5Bl8YNcvE0wjeNAojJkayCGhkl8FpyJGTlH9qgbZ-b3irMk7Uoc0hafYOkmAkBVqVeWk_3qyeYLergu0Us2Lw.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Nuwan%20Pradeep%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EC1: Nishshanka Hapuarachchi -->
+<section id="ec1Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Nishshanka Hapuarachchi</h2>
+                    <p>BA(Economics/Psychology)UOP</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Nishshanka Hapuarachchi.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Amila%20Perera%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EC2: Akila Dilshan -->
+<section id="ec2Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Akila Dilshan</h2>
+                    <p>BSc.(Hons) Business Management</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Akila Dilashan.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Supun%20Silva%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EC3: Akila Deshapriya -->
+<section id="ec3Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Akila Deshapriya</h2>
+                    <p>B.Com (sp) usj Reading ICASL</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Akila Deshapriya.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Lahiru%20Bandara%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EC4: Danushka Lakmal -->
+<section id="ec4Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Danushka Lakmal</h2>
+                    <p>B.Sc.Mgt(Special) University of Sri Jayawardenapura</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Danushka Lakmal.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Kavindu%20Nimsara%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EC5: Shamika Weerasinghe -->
+<section id="ec5Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Shamika Weerasinghe</h2>
+                    <p>BSc. Management (Special) Degree, University of Jayawardenapura</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Shamika Weerasinghe.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Tharaka%20Wijesinghe%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EC6: Dilshan Bopage -->
+<section id="ec6Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Dilshan Bopage</h2>
+                    <p>MA Economics,</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Dilshan Bopage.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Roshan%20Kumara%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EC7: Vinuja Vindiya -->
+<section id="ec7Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Vinuja Vindiya</h2>
+                    <p>B.Sc Honours in Accounting (UG)</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Vinuja Vindiya.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Sandun%20Fernando%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- EC8: Kushani Hansika -->
+<section id="ec8Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Kushani Hansika</h2>
+                    <p>B.A. in Economics MEcon (Reading)</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="Kushani Hansika.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Chamil%20Perera%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ICT1: Deshan Perera -->
+<section id="ict1Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Deshan Perera</h2>
+                    <p>University of Sri Jayawardhenapura</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="1-Deshan Perera.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Dasun%20Shanaka%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ICT2: Neranda Dilhara -->
+<section id="ict2Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Neranda Dilhara</h2>
+                    <p>Bsc(Hons) in Information Technology</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="2-Neranda Dilhara.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Kusal%20Mendis%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ICT3: Sadumini Perera -->
+<section id="ict3Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Sadumini Perera</h2>
+                    <p>BSc.(Hons) Software Engineeering</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="3-Sadumini Perera.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Pathum%20Nissanka%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ICT4: Kamal Krishantha-->
+<section id="ict4Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Kamal Krishantha</h2>
+                    <p>BSc in Computer Science | University of Colombo</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="4-Kamal Krishantha.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Charith%20Asalanka%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ICT5: Shashika Mdhushan -->
+<section id="ict5Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Shashika Mdhushan</h2>
+                    <p>BSc.(Hons) IT </p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="5-Shashika Madhushan.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Wanindu%20Hasaranga%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ICT6: Aruna Bandara -->
+<section id="ict6Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Aruna Bandara</h2>
+                    <p>University of colombo</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="6-Aruna Bandara.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Maheesh%20Theekshana%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ICT7: Pubudu Bandara Wijekoon -->
+<section id="ict7Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Pubudu Bandara Wijekoon</h2>
+                    <p>BSc. Hons in Information Technology (SLIT)</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="7-Pubudu Bandara Wijekoon.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Matheesha%20Pathirana%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ICT8: Pankaja Wickramarathna -->
+<section id="ict8Profile" class="section">
+    <div class="container">
+        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                <div class="profile-details">
+                    <h2>Pankaja Wickramarathna</h2>
+                    <p>BSc.(hons) in data Science Reading SLTC</p>
+                </div>
+            </div>
+            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                <div class="video-card">
+                    <video controls>
+                        <source src="8-Pankaja Wickramarathna.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; text-align: center;">
+                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20Dushmantha%20Chameera%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- BUSINESS STUDIES PROFILES WITH VIDEO -->
+    <script>
+        // Helper template generator for Business Studies, Economics, and ICT profiles
+        const bsTutors = [
+            { id: 'bs1Profile', name: 'Nimal Fernando', sub: 'B.Com (Sp), University of Colombo' },
+            { id: 'bs2Profile', name: 'Kamal Weerakoon', sub: 'BBA, University of Peradeniya' },
+            { id: 'bs3Profile', name: 'Sunethra Peiris', sub: 'Senior Lecturer' },
+            { id: 'bs4Profile', name: 'Ruwan Kumara', sub: 'BBA Finance, USJP' },
+            { id: 'bs5Profile', name: 'Jagath Bandara', sub: 'University of Kelaniya' },
+            { id: 'bs6Profile', name: 'Saman Perera', sub: 'MBA, UK' },
+            { id: 'bs7Profile', name: 'Dinesh Silva', sub: 'B.Com, University of Ruhuna' },
+            { id: 'bs8Profile', name: 'Nuwan Pradeep', sub: 'Wayamba University' }
+        ];
+
+        const ecTutors = [
+            { id: 'ec1Profile', name: 'Amila Perera', sub: 'B.A. Economics (Sp), University of Colombo' },
+            { id: 'ec2Profile', name: 'Supun Silva', sub: 'USJP' },
+            { id: 'ec3Profile', name: 'Lahiru Bandara', sub: 'Senior Lecturer' },
+            { id: 'ec4Profile', name: 'Kavindu Nimsara', sub: 'B.A. Economics, Kelaniya' },
+            { id: 'ec5Profile', name: 'Tharaka Wijesinghe', sub: 'University of Peradeniya' },
+            { id: 'ec6Profile', name: 'Roshan Kumara', sub: 'MA Economics, UK' },
+            { id: 'ec7Profile', name: 'Sandun Fernando', sub: 'B.A., University of Ruhuna' },
+            { id: 'ec8Profile', name: 'Chamil Perera', sub: 'Wayamba University' }
+        ];
+
+        const ictTutors = [
+            { id: 'ict1Profile', name: 'Dasun Shanaka', sub: 'BIT, University of Colombo' },
+            { id: 'ict2Profile', name: 'Kusal Mendis', sub: 'BSc. IT, Moratuwa' },
+            { id: 'ict3Profile', name: 'Pathum Nissanka', sub: 'Senior Lecturer' },
+            { id: 'ict4Profile', name: 'Charith Asalanka', sub: 'BSc. Computer Science, USJP' },
+            { id: 'ict5Profile', name: 'Wanindu Hasaranga', sub: 'University of Kelaniya' },
+            { id: 'ict6Profile', name: 'Maheesh Theekshana', sub: 'MSc IT' },
+            { id: 'ict7Profile', name: 'Matheesha Pathirana', sub: 'BSc., University of Peradeniya' },
+            { id: 'ict8Profile', name: 'Dushmantha Chameera', sub: 'Rajarata University' }
+        ];
+
+        function renderProfiles(tutorsList) {
+            tutorsList.forEach(t => {
+                if (document.getElementById(t.id)) return; // Skip if already hardcoded above
+                const section = document.createElement('section');
+                section.id = t.id;
+                section.className = 'section';
+                section.innerHTML = `
+                    <div class="container">
+                        <a class="back-link" onclick="goBackToSubjectTutors()"><i class="fas fa-arrow-left"></i> Back to Tutors</a>
+                        <div class="profile-container">
+                            <div class="profile-header">
+                                <div class="profile-avatar"><i class="fas fa-chalkboard-user"></i></div>
+                                <div class="profile-details">
+                                    <h2>${t.name}</h2>
+                                    <p>${t.sub}</p>
+                                </div>
+                            </div>
+                            <h3 style="margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-video"></i> Tutor Sample Videos</h3>
+                            <div class="videos-grid" style="grid-template-columns: 1fr; max-width: 500px; margin: 0 auto;">
+                                <div class="video-card">
+                                    <video controls>
+                                        <source src="AQMjXqf1K94ZAdc8BzNjEa83PjQ29kCHCMDvVSaclsCpnUlCvERmBK-hbGywclZj4t9QSYGfBoiAxbaJshOmHI7PF71itd_x8De7rKJ9mA.mp4" type="video/mp4">
+                                    </video>
+                                    <div class="video-info"><h4>Full Paper Series</h4></div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 2.5rem; text-align: center;">
+                                <a href="https://wa.me/94778284875?text=Hello%2C%20I%20would%20like%20to%20book%20${encodeURIComponent(t.name)}%20as%20my%20tutor." target="_blank" class="connect-btn"><i class="fab fa-whatsapp"></i> Book a tutor</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.insertBefore(section, document.querySelector('.footer'));
+            });
+        }
+
+        renderProfiles(bsTutors);
+        renderProfiles(ecTutors);
+        renderProfiles(ictTutors);
+    </script>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>Tutor Via. A/L Commerce & ICT Student - University Tutor Matching Platform. All rights reserved.</p>
+    </div>
+
+    <script>
+        let currentSubject = 'Accounting';
+
+        window.history.pushState(null, null, window.location.href);
+        window.addEventListener('popstate', function () {
+            window.history.pushState(null, null, window.location.href);
+        });
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('tutorViaUsers')) || [];
+        }
+
+        function handleStudentRegister(event) {
+            event.preventDefault();
+            const email = document.getElementById('studentEmail').value;
+            const password = document.getElementById('studentPassword').value;
+            let users = getUsers();
+            if(users.some(u => u.email === email)) {
+                alert('This email is already registered! Please log in.');
+                return;
+            }
+            users.push({ email, password, role: 'Student' });
+            localStorage.setItem('tutorViaUsers', JSON.stringify(users));
+            alert('Student registration successful! Please log in.');
+            showSection('home');
+        }
+
+        function handleTutorRegister(event) {
+            event.preventDefault();
+            const email = document.getElementById('tutorEmail').value;
+            const password = document.getElementById('tutorPosition').value; // Keeping structure intact if applicable
+            let users = getUsers();
+            if(users.some(u => u.email === email)) {
+                alert('This email is already registered! Please log in.');
+                return;
+            }
+            users.push({ email, password, role: 'Tutor' });
+            localStorage.setItem('tutorViaUsers', JSON.stringify(users));
+            alert('Tutor registration successful! Please log in.');
+            showSection('home');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            let users = getUsers();
+            const validUser = users.find(u => u.email === email && u.password === password);
+            if (validUser) {
+                alert('Login successful! Welcome back.');
+                showSection('dashboard');
+                document.getElementById('navLinks').innerHTML = `
+                    <span style="font-weight: 500; font-size: 0.9rem; color: var(--text-light);">${email} (${validUser.role})</span>
+                    <button class="nav-btn outline" onclick="logout()">Logout</button>
+                `;
+            } else {
+                alert('Invalid email or password! Please check your details or register first.');
+            }
+        }
+
+        function logout() {
+            alert('Logged out successfully.');
+            document.getElementById('navLinks').innerHTML = `
+                <button class="nav-btn outline" onclick="showSection('studentReg')">Student Sign Up</button>
+                <button class="nav-btn primary" onclick="showSection('tutorReg')">Tutor Sign Up</button>
+            `;
+            showSection('home');
+        }
+
+        function selectSubject(subjectName) {
+            currentSubject = subjectName;
+            if (subjectName === 'Accounting') {
+                showSection('accountingTutors');
+            } else if (subjectName === 'Business Studies') {
+                showSection('businessStudiesTutors');
+            } else if (subjectName === 'Economics') {
+                showSection('economicsTutors');
+            } else if (subjectName === 'ICT') {
+                showSection('ictTutors');
+            }
+        }
+
+        function showProfile(profileId) {
+            showSection(profileId);
+        }
+
+        function goBackToSubjectTutors() {
+            if (currentSubject === 'Accounting') {
+                showSection('accountingTutors');
+            } else if (currentSubject === 'Business Studies') {
+                showSection('businessStudiesTutors');
+            } else if (currentSubject === 'Economics') {
+                showSection('economicsTutors');
+            } else if (currentSubject === 'ICT') {
+                showSection('ictTutors');
+            } else {
+                showSection('dashboard');
+            }
+        }
+    </script>
+</body>
+</html>
